@@ -83,8 +83,13 @@ def findTransaction():
     print('Inputs: ' + str(len(transaction['vin'])))
     print('Outputs: ' + str(len(transaction['vout'])))
     for index in range(len(transaction['vout'])):
-        print(transaction['vout'][index])
-        print('Output ' + str(index) + ': ' + str(transaction['vout'][index]['value']) + ' BTE till: ' + str(transaction['vout'][index]['scriptPubKey']['addresses'][0])) 
+        output = ''
+        # Check for coinbase transaction cases containing no addresses
+        if transaction['vout'][index]['scriptPubKey']['type'] == 'nulldata':
+            output = 'Ingen address'
+        else:
+            output = str(transaction['vout'][index]['value']) + ' BTE till: ' + str(transaction['vout'][index]['scriptPubKey']['addresses'][0])
+        print('Output ' + str(index) + ': ' + output) 
 
 # 
 
